@@ -1,4 +1,4 @@
-unit class HTTP::Request::FormData;
+unit class HTTP::Request::FormData:ver<0.1>:auth<github:zostay>;
 use v6;
 
 =begin pod
