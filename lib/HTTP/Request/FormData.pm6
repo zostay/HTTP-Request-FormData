@@ -118,7 +118,7 @@ like this:
 
 It is essentially equivalent to:
 
-    qq<multipart/formdata; boundary="$fd.boundary()">
+    qq<multipart/formdata; boundary=$fd.boundary()>
 
 As this calls C<boundary()>, calls to C<add-part> will throw an exception after
 the first call to this method is made.
@@ -153,7 +153,7 @@ class Part {
     method content() returns Blob:D {
         return $_ with $!content;
 
-        my $header = qq<Content-Disposition: name="$!name">;
+        my $header = qq<Content-Disposition: form-data; name="$!name">;
         $header ~= qq<; filename="$_"> with $!filename;
         $header ~= qq<\r\nContent-Type: $_> with $!content-type;
         $header ~= qq<\r\n\r\n>;
@@ -225,7 +225,7 @@ method boundary() returns Str:D {
 }
 
 method content-type() returns Str:D {
-    qq<multipart/form-data; boundary="$fd.boundary()">
+    qq<multipart/form-data; boundary={self.boundary}>
 }
 
 constant CRLF = Blob.new(0xd, 0xa);
