@@ -98,6 +98,31 @@ boundary may have to change.
 For this reason, the C<add-part> method will throw an exception if you attempt
 to add a part after calling this method to select a boundary.
 
+=head2 method content-type
+
+    method content-type() returns Str:D
+
+This is a handy helper for generating a MIME type with the boundary parameter
+like this:
+
+    use HTTP::Request::Common;
+
+    my $fd = HTTP::Request::FormData.new;
+    $fd.add-part('name', 'alice');
+
+    my $req = POST(
+        'http://example.com/',
+        Content-Type => $fd.content-type,
+        content => $fd.content,
+    );
+
+It is essentially equivalent to:
+
+    qq<multipart/formdata; boundary="$fd.boundary()">
+
+As this calls C<boundary()>, calls to C<add-part> will throw an exception after
+the first call to this method is made.
+
 =head2 method content
 
     method content() returns Blob:D
@@ -197,6 +222,10 @@ method boundary() returns Str:D {
         # have a valid boundary string.
         return $!boundary;
     }
+}
+
+method content-type() returns Str:D {
+    qq<multipart/form-data; boundary="$fd.boundary()">
 }
 
 constant CRLF = Blob.new(0xd, 0xa);
