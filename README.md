@@ -17,7 +17,7 @@ SYNOPSIS
 
     my $req = POST(
         'http://example.com/',
-        Content-Type => qq<multipart/form-data; boundary="$fd.boundary()">,
+        Content-Type => $fd.content-type,
         content => $fd.content,
     );
 

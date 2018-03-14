@@ -20,7 +20,7 @@ HTTP::Request::FormData - handler to expedite the handling of multipart/form-dat
 
     my $req = POST(
         'http://example.com/',
-        Content-Type => qq<multipart/form-data; boundary="$fd.boundary()">,
+        Content-Type => $fd.content-type,
         content => $fd.content,
     );
 
