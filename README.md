@@ -13,7 +13,7 @@ SYNOPSIS
 
     my $fd = HTTP::Request::FormData.new;
     $fd.add-part('username', 'alice');
-    $fd.add-part('avatar', 'alice.png'.IO, Content-Type => 'image/png');
+    $fd.add-part('avatar', 'alice.png'.IO, content-type => 'image/png');
 
     my $req = POST(
         'http://example.com/',
